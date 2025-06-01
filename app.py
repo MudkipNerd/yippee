@@ -93,24 +93,24 @@ def submit():
             conn.commit()
             grievance_id = c.lastrowid
 
-        msg = Message("New Grievance from {} 💌".format(USER_NAME),
+        msg = Message("New complaint from {}".format(USER_NAME),
                       sender=os.environ.get('EMAIL_ADMIN'),
                       recipients=[os.environ.get('EMAIL_ADMIN')])
         msg.html = f"""
-            <h3>New Grievance Submitted 💌</h3>
+            <h3>New complaint submitted</h3>
             <p><strong>Title:</strong> {title}</p>
             <p><strong>Mood:</strong> {mood}</p>
             <p><strong>Priority:</strong> {priority}</p>
             <p><strong>Description:</strong><br>{desc}</p>
             <hr>
             <p>Click below to respond:</p>
-            <form action="https://sehaj-grievance-portal.up.railway.app/login" method="GET">
-                <button type="submit" style="padding: 10px; background-color: pink; border: none; border-radius: 5px;">Respond 💌</button>
+            <form action="https://web-production-54729.up.railway.app//login" method="GET">
+                <button type="submit" style="padding: 10px; background-color: pink; border: none; border-radius: 5px;">Respond or else</button>
             </form>
         """
         mail.send(msg)
 
-        flash('Grievance submitted! {} has been notified 💌'.format(ADMIN_NAME))
+        flash('Complaint submitted! {} has been notified'.format(ADMIN_NAME))
         return redirect(url_for('thank_you'))
 
     return render_template('submit.html')
@@ -126,7 +126,7 @@ def send_email_to_user(grievance_id, response):
         status = "Resolved ✅" if resolved == 1 else "Pending ❌"
 
         # Create the email message
-        msg = Message("Grievance Response Received - Re: {}".format(title),
+        msg = Message("Complaint Response Received - Re: {}".format(title),
                     recipients=[os.environ.get('EMAIL_USER_RECEIVER')])
 
         msg.html = f"""
